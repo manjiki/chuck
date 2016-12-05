@@ -32,9 +32,9 @@ public class ChuckController {
                 "body {background-color: powderblue;}" +
                 "p {font: 18px 'Cabin'; text-align: center;}" +
                 "</style>"+
-                "<body><p><img src=\"/static/images/pic_mountain.jpg\" align=\"middle\"></p>    "+
+                "<body><p><img src=\"/static/images/chuck.jpg\" align=\"middle\"></p>    "+
         "<h1> Chuck Says</h1> <p>%s <br>" +
-                "</p></body></html>",
+                "</p><br><br> <p><img src=\"/static/images/chuck1.jpg\" align=\"middle\"><img src=\"/static/images/chuck2.jpg\" align=\"middle\"></body></html>",
                 quote.getValue().getJoke().toString());
         return html;
         /*return quote.getValue().getJoke();*/
