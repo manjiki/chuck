@@ -4,15 +4,17 @@ package chuck;
  */
 
 
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-
-/**import org.springframework.beans.factory.annotation.Autowired;**/
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.beans.factory.annotation.Value;
+
+import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicLong;
+
+/**
+ * import org.springframework.beans.factory.annotation.Autowired;
+ **/
 
 @RestController
 public class ChuckController {
@@ -21,21 +23,15 @@ public class ChuckController {
     /**@Autowired
     FortunesRepository fortunesRepository;**/
 
-    @RequestMapping("/")
+    @RequestMapping("/chuck")
     public String giveMeAChuck(){
+        String htmlTemplate;
         Chuck quote = restTemplate.getForObject("http://api.icndb.com/jokes/random", Chuck.class);
-        String html= String.format("<html>" +
-                "<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>" +
-                "<link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>"+
-                "<style> " +
-                "h1 { font: 400 100px/1.3 'Lobster', Helvetica, sans-serif; color: #2b2b2b; text-shadow: 2px 2px 0px rgba(0,0,0,0.1);text-align: center;}" +
-                "body {background-color: powderblue;}" +
-                "p {font: 18px 'Cabin'; text-align: center;}" +
-                "</style>"+
-                "<body><p><img src=\"/static/images/chuck.jpg\" align=\"middle\"></p>    "+
-        "<h1> Chuck Says</h1> <p>%s <br>" +
-                "</p><br><br> <p><img src=\"/static/images/chuck1.jpg\" align=\"middle\"><img src=\"/static/images/chuck2.jpg\" align=\"middle\"></body></html>",
-                quote.getValue().getJoke().toString());
+        try (InputStream tmpl = this.getClass().getClassLoader().getResourceAsStream("index.html")) {
+            htmlTemplate = StreamUtils.copyToString(tmpl, Charset.forName("UTF-8"));
+            htmlTemplate = (htmlTemplate == null) ? "" : htmlTemplate;
+        }
+        String html= String.format(htmlTemplate, quote.getValue().getJoke().toString());
         return html;
         /*return quote.getValue().getJoke();*/
     }
