@@ -4,13 +4,16 @@ package chuck;
  */
 
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.util.StreamUtils;
 
 /**
  * import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class ChuckController {
     FortunesRepository fortunesRepository;**/
 
     @RequestMapping("/chuck")
-    public String giveMeAChuck(){
+    public String giveMeAChuck() throws IOException{
         String htmlTemplate;
         Chuck quote = restTemplate.getForObject("http://api.icndb.com/jokes/random", Chuck.class);
         try (InputStream tmpl = this.getClass().getClassLoader().getResourceAsStream("index.html")) {
