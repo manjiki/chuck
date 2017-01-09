@@ -28,7 +28,7 @@ public class ChuckController {
     @RequestMapping("/chuck")
     public String giveMeAChuck() throws IOException{
         String htmlTemplate;
-        Chuck quote = restTemplate.getForObject("http://api.icndb.com/jokes/random", Chuck.class);
+        Chuck quote = restTemplate.getForObject(chuckAPI, Chuck.class);
         try (InputStream tmpl = this.getClass().getClassLoader().getResourceAsStream("index.html")) {
             htmlTemplate = StreamUtils.copyToString(tmpl, Charset.forName("UTF-8"));
             htmlTemplate = (htmlTemplate == null) ? "" : htmlTemplate;
@@ -47,6 +47,9 @@ public class ChuckController {
 
     @Value("${server.zone}")
     public String serverZone;
+
+    @Value("${chuck.api}")
+    public String chuckAPI;
 
     @RequestMapping("/zone")
     public String getzone() {

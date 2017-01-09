@@ -5,7 +5,7 @@
 
     <groupId>ltd.jiji</groupId>
     <artifactId>chuck</artifactId>
-    <version>0.09-SNAPSHOT</version>
+    <version>0.10-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
