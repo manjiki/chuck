@@ -1,7 +1,6 @@
 package chuck;
 
-/**
- * Created by manji on 6/7/16.
+ /** Created by manji on 6/7/16. */
 
 
 import javax.persistence.*;
@@ -45,4 +44,4 @@ public class Fortune {
         return text;
     }
 
-} **/
+}

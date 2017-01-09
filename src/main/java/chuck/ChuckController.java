@@ -14,17 +14,16 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.util.StreamUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Random;
 
-/**
- * import org.springframework.beans.factory.annotation.Autowired;
- **/
 
 @RestController
 public class ChuckController {
     private RestTemplate restTemplate = new RestTemplate();
     private final AtomicLong counter = new AtomicLong();
-    /**@Autowired
-    FortunesRepository fortunesRepository;**/
+    @Autowired
+    FortunesRepository fortunesRepository;
 
     @RequestMapping("/chuck")
     public String giveMeAChuck() throws IOException{
@@ -38,13 +37,13 @@ public class ChuckController {
         return html;
         /*return quote.getValue().getJoke();*/
     }
-    /**@RequestMapping("/fortune")
+   @RequestMapping("/fortune")
     public String randomFortume(){
         Long range = fortunesRepository.count();
         Integer quote = new Random().nextInt(range.intValue());
-        Fortune fortune_cookie = fortunesRepository.findById(quote);
+       Fortune fortune_cookie = fortunesRepository.findById(quote);
         return fortune_cookie.getText();
-    }**/
+    }
 
     @Value("${server.zone}")
     public String serverZone;
