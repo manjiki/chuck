@@ -6,7 +6,9 @@ package chuck;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +45,12 @@ public class ChuckController {
         Integer quote = new Random().nextInt(range.intValue());
        Fortune fortune_cookie = fortunesRepository.findById(quote);
         return fortune_cookie.getText();
+    }
+
+    @RequestMapping(value = "/hello/{name}", method = RequestMethod.GET)
+    public String hello(@PathVariable("name") String name){
+        return "Hello " + name;
+
     }
 
     @Value("${server.zone}")
