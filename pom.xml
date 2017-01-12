@@ -77,7 +77,6 @@
                 <version>0.4.11</version>
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>${basedir}/src/main/docker</dockerDirectory>
                     <baseImage>java:openjdk-8-jdk-alpine</baseImage>
                     <entryPoint>["java","-jar","/${project.build.finalName}.${project.packaging}"]</entryPoint>
                     <resources>
