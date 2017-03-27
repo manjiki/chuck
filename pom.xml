@@ -2,13 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>ltd.jiji</groupId>
     <artifactId>chuck</artifactId>
     <version>0.10-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -25,6 +22,41 @@
                  <docker.image.prefix>${project.artifactId}/logicea</docker.image.prefix>
              </properties>
         </profile>
+	<profile>
+       	   <id>artifactory-deployment</id>
+		     <build>
+		        <plugins>
+		           <plugin>
+			            <groupId>org.jfrog.buildinfo</groupId>
+		                <artifactId>artifactory-maven-plugin</artifactId>
+		                <version>2.4.1</version>
+    	                <inherited>false</inherited>
+					    <executions>
+							<execution>
+								<id>build-info</id>
+								<goals>
+									<goal>publish</goal>
+								</goals>
+								<configuration>
+									<deployProperties>
+										<groupId>${project.groupId}</groupId>
+										<artifactId>${project.artifactId}</artifactId>
+										<version>${project.version}</version>
+									</deployProperties>
+									<publisher>
+										<contextUrl>${ARTIFACTORY_PUBLISHER_HOST_URL}</contextUrl>
+										<username>${ARTIFACTORY_PUBLISHER_USERNAME}</username>
+										<password>${ARTIFACTORY_PUBLISHER_PASSWORD}</password>
+										<repoKey>libs-release-local</repoKey>
+										<snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+									</publisher>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
     </profiles>
 
     <dependencies>
